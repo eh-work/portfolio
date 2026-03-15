@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eleanor Hooker — Portfolio</title>
+<style>
+
+/* ── Reset ─────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background: #ffffff;
+  color: #111111;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+img { display: block; }
+a { text-decoration: none; color: inherit; }
+
+/* ── Nav ───────────────────────────────────────────────────────────────── */
+#nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 56px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.nav-name {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #111111;
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+#frame-counter {
+  font-size: 12px;
+  color: #888888;
+  letter-spacing: 0.04em;
+  display: none;
+}
+#toggle-btn {
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  color: #111111;
+  background: transparent;
+  border: 1px solid #d0d0d0;
+  padding: 7px 16px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+#toggle-btn:hover { background: #f5f5f5; border-color: #aaa; }
+
+/* ── Section base ──────────────────────────────────────────────────────── */
+.section {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* ── Section separator ─────────────────────────────────────────────────── */
+.section-sep {
+  width: 100%;
+  height: 1px;
+  background: #E5E5E5;
+  margin: 80px 0;
+}
+body.frames-mode .section-sep { display: none; }
+
+/* ── Section 1 — Title ─────────────────────────────────────────────────── */
+#s1 {
+  background: #111111;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+.title-inner {
+  text-align: center;
+  opacity: 0;
+  animation: fadeUp 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.2s;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+.title-name {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 72px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+.title-tagline {
+  margin-top: 22px;
+  font-size: 20px;
+  font-weight: 300;
+  color: #888888;
+  letter-spacing: 0.01em;
+}
+
+/* ── Content sections: two-column layout ──────────────────────────────── */
+.section-content {
+  flex-direction: row;
+  align-items: stretch;
+}
+.left-col {
+  width: 55%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 120px 56px 96px 80px;
+}
+.right-col {
+  width: 45%;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Left column typography ────────────────────────────────────────────── */
+.section-header {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #111111;
+  line-height: 1.18;
+  margin-bottom: 44px;
+}
+.ba-block { flex: 1; }
+.ba-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  margin-bottom: 10px;
+}
+.ba-label.before { color: #949494; }
+.ba-label.after  { color: #111111; }
+.ba-text {
+  font-size: 15px;
+  line-height: 1.72;
+  margin-bottom: 32px;
+}
+.ba-text.before { color: #767676; }
+.ba-text.after  { color: #111111; }
+
+/* ── Stats row ─────────────────────────────────────────────────────────── */
+.stats-row {
+  display: flex;
+  gap: 44px;
+  margin-top: 56px;
+  flex-wrap: wrap;
+}
+.stat { display: flex; flex-direction: column; }
+.stat-num {
+  font-size: 36px;
+  font-weight: 700;
+  color: #111111;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+.stat-label {
+  font-size: 11px;
+  color: #666666;
+  margin-top: 8px;
+  line-height: 1.45;
+  max-width: 140px;
+}
+
+/* ── Screenshot shadow ─────────────────────────────────────────────────── */
+.screenshot {
+  box-shadow: 0 2px 16px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.07);
+  border-radius: 6px;
+  border: 1px solid #EFEFEF;
+}
+
+/* ── Section 2 — Advocacy: right column ───────────────────────────────── */
+.advocacy-right {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  gap: 16px;
+}
+.advocacy-right-img {
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.07);
+  border-radius: 6px;
+  border: 1px solid #EFEFEF;
+}
+.advocacy-right-video {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  background: #111111;
+  border-radius: 8px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+  display: block;
+  flex-shrink: 0;
+}
+
+/* ── Right column: screenshot-col (sections 3, 6) ─────────────────────── */
+.screenshot-col {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 40px;
+  background: #ffffff;
+}
+.screenshot-col img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── Pillar cards (Section 3) ──────────────────────────────────────────── */
+.pillar-cards {
+  display: flex;
+  margin-top: 32px;
+  border-top: 1px solid #111111;
+}
+.pillar-card {
+  flex: 1;
+  padding: 20px 24px 0 0;
+  border-right: 1px solid #e0e0e0;
+}
+.pillar-card:last-child {
+  padding-right: 0;
+  border-right: none;
+}
+.pillar-name {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #111111;
+  margin-bottom: 10px;
+}
+.pillar-desc {
+  font-size: 12px;
+  color: #555555;
+  line-height: 1.62;
+  margin-bottom: 10px;
+}
+.pillar-stats-text {
+  font-size: 11px;
+  color: #888888;
+  line-height: 1.6;
+}
+
+/* ── Canvas right column (Section 4) ────────────────────────────────────── */
+.canvas-right {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.canvas-hero {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.canvas-yt {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 4px;
+  border: none;
+  flex-shrink: 0;
+}
+
+/* ── Brands label ────────────────────────────────────────────────────────── */
+.brands-label {
+  font-size: 12px;
+  color: #767676;
+  margin-top: 14px;
+}
+
+/* ── AEO screenshots right column (Section 5) ──────────────────────────── */
+#s5 .ba-block { flex: 0 0 auto; }
+.aeo-screenshots {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  padding: 80px 40px;
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: thin;
+  scrollbar-color: #d0d0d0 transparent;
+}
+.aeo-screenshots::-webkit-scrollbar { width: 4px; }
+.aeo-screenshots::-webkit-scrollbar-track { background: transparent; }
+.aeo-screenshots::-webkit-scrollbar-thumb { background: #d0d0d0; border-radius: 2px; }
+.aeo-shot-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  color: #767676;
+  margin-bottom: 8px;
+  margin-top: 20px;
+}
+.aeo-shot-label:first-child { margin-top: 0; }
+.aeo-screenshots img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* ── Frame navigation arrows ────────────────────────────────────────────── */
+#frame-nav {
+  display: none;
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+  gap: 16px;
+  z-index: 1001;
+}
+.frame-btn {
+  width: 40px;
+  height: 40px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid #d0d0d0;
+  cursor: pointer;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #111111;
+  transition: background 0.15s ease;
+}
+.frame-btn:hover:not(:disabled) { background: #ebebeb; }
+.frame-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+
+/* ── Frames mode ──────────────────────────────────────────────────────────── */
+body.frames-mode {
+  overflow: hidden;
+}
+body.frames-mode .section {
+  position: fixed;
+  inset: 0;
+  height: 100vh;
+  overflow: hidden;
+  min-height: unset;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+body.frames-mode .section.frames-active {
+  opacity: 1;
+  pointer-events: all;
+  z-index: 10;
+}
+/* Allow left column to scroll when content is taller than viewport */
+body.frames-mode .left-col {
+  height: 100%;
+  overflow-y: auto;
+  padding-top: 76px;
+  scrollbar-width: thin;
+  scrollbar-color: #d0d0d0 transparent;
+}
+body.frames-mode .left-col::-webkit-scrollbar { width: 4px; }
+body.frames-mode .left-col::-webkit-scrollbar-track { background: transparent; }
+body.frames-mode .left-col::-webkit-scrollbar-thumb { background: #d0d0d0; border-radius: 2px; }
+/* Right column stays fixed-height */
+body.frames-mode .right-col { height: 100%; }
+/* Title section: no scroll needed */
+body.frames-mode #s1 { overflow: hidden; }
+/* Pillar cards: explicit right padding on non-last cards */
+.pillar-card:not(:last-child) { padding-right: 24px; }
+
+</style>
+</head>
+<body>
+
+<!-- ── Fixed nav ──────────────────────────────────────────────────────────── -->
+<nav id="nav">
+  <span class="nav-name">Eleanor Hooker</span>
+  <div class="nav-right">
+    <span id="frame-counter"></span>
+    <button id="toggle-btn">View as Frames</button>
+  </div>
+</nav>
+
+<!-- ── Frame arrows ──────────────────────────────────────────────────────── -->
+<div id="frame-nav">
+  <button class="frame-btn" id="btn-prev" disabled aria-label="Previous">←</button>
+  <button class="frame-btn" id="btn-next" aria-label="Next">→</button>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<!-- S1 — Title                                                              -->
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<section class="section" id="s1">
+  <div class="title-inner">
+    <h1 class="title-name">Eleanor Hooker</h1>
+    <p class="title-tagline">Community-led growth leader. Key career highlights.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<!-- S2 — Enterprise Community & Customer Advocacy                          -->
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<section class="section section-content" id="s2">
+  <div class="left-col">
+    <h2 class="section-header">Enterprise Community &amp; Customer Advocacy</h2>
+    <div class="ba-block">
+      <span class="ba-label before">BEFORE</span>
+      <p class="ba-text before">Ad hoc advocacy requests, one-off event outreach, legacy CAB with little member commonality and no roadmap influence. No structured relationships in top enterprise accounts.</p>
+      <span class="ba-label after">AFTER</span>
+      <p class="ba-text after">Two coordinated programs targeting top accounts by ARR — a power user community (Miro Heroes) engaging end users in product, design, and engineering; and a Lighthouse/CAB program engaging decision makers. VP+ contacts activated across public speaking, sales references, PR/AR, and customer story video.</p>
+    </div>
+    <div class="stats-row">
+      <div class="stat">
+        <span class="stat-num">78%</span>
+        <span class="stat-label">YoY community growth</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">20</span>
+        <span class="stat-label">top accounts by ARR activated</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">MAU lift</span>
+        <span class="stat-label">in target accounts</span>
+      </div>
+    </div>
+  </div>
+  <div class="right-col">
+    <div class="advocacy-right">
+      <img class="advocacy-right-img"
+           src="miro-enterprise-advocacy/MiroHeroesCommunity.png"
+           alt="Miro Heroes Community">
+      <a href="https://youtu.be/gBj5LcpHec0" target="_blank" class="advocacy-right-video" style="display:block; position:relative; border-radius:8px; overflow:hidden; box-shadow:0 2px 16px rgba(0,0,0,0.10);">
+        <img src="miro-enterprise-advocacy/Miro+On-Thumbnail.png" style="width:100%; height:100%; object-fit:cover; display:block;">
+        <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.3);">
+          <div style="width:56px; height:56px; background:#FF0000; border-radius:50%; display:flex; align-items:center; justify-content:center;">
+            <div style="width:0; height:0; border-top:10px solid transparent; border-bottom:10px solid transparent; border-left:18px solid white; margin-left:4px;"></div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="section-sep"></div>
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<!-- S3 — Creator & Influencer Ecosystem                                    -->
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<section class="section section-content" id="s3">
+  <div class="left-col">
+    <h2 class="section-header">Creator &amp; Influencer Ecosystem</h2>
+    <div class="ba-block">
+      <span class="ba-label before">BEFORE</span>
+      <p class="ba-text before">Templates scattered across subdirectories, no creator incentives, no ambassador infrastructure, no paid influencer strategy. No unified destination.</p>
+      <span class="ba-label after">AFTER</span>
+      <p class="ba-text after">Three coordinated pillars operating as a system — each distinct, all compounding toward the same objective.</p>
+    </div>
+    <div class="pillar-cards">
+      <div class="pillar-card">
+        <div class="pillar-name">ORGANIC CREATORS</div>
+        <p class="pillar-desc">Single Miroverse destination, search-optimized, ongoing contributions.</p>
+        <p class="pillar-stats-text">5X content growth · 10M+ users · 80+ AI templates at launch</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-name">PAID INFLUENCERS</div>
+        <p class="pillar-desc">Tiered database mapped to product, engineering, design personas. Competitive share of voice in a category redefining itself from whiteboard to AI workspace.</p>
+        <p class="pillar-stats-text">9 creators → 280+ across tiers</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-name">AMBASSADORS</div>
+        <p class="pillar-desc">Application-based, event-hosting requirement, resourced program.</p>
+        <p class="pillar-stats-text">240 events · 16 countries · 3K attendees in 9 months</p>
+      </div>
+    </div>
+    <div class="stats-row">
+      <div class="stat">
+        <span class="stat-num">5X</span>
+        <span class="stat-label">creator content growth</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">10M+</span>
+        <span class="stat-label">users engaging with creator content</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">6%</span>
+        <span class="stat-label">of organic new corporate users from templates</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">280+</span>
+        <span class="stat-label">creators across tiers</span>
+      </div>
+    </div>
+  </div>
+  <div class="right-col">
+    <div class="screenshot-col">
+      <img class="screenshot"
+           src="miroverse/Miroverse-Homepage.png"
+           alt="Miroverse Homepage">
+    </div>
+  </div>
+</section>
+
+<div class="section-sep"></div>
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<!-- S4 — Canvas Conference                                                 -->
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<section class="section section-content" id="s4">
+  <div class="left-col">
+    <h2 class="section-header">Canvas Conference</h2>
+    <div class="ba-block">
+      <span class="ba-label before">BEFORE</span>
+      <p class="ba-text before">No marquee customer event. No platform for customer voices at scale.</p>
+      <span class="ba-label after">AFTER</span>
+      <p class="ba-text after">End-to-end ownership of Miro's flagship annual conference — strategy, acquisition, content development, product launch integration, experiential design.</p>
+    </div>
+    <div class="stats-row">
+      <div class="stat">
+        <span class="stat-num">175%</span>
+        <span class="stat-label">YoY in-person attendance growth</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">3X</span>
+        <span class="stat-label">net new ARR generated</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">80</span>
+        <span class="stat-label">NPS score</span>
+      </div>
+    </div>
+    <p class="brands-label">Brands on stage: NFL · On · GitHub · Red Hat</p>
+  </div>
+  <div class="right-col">
+    <div class="canvas-right">
+      <img class="canvas-hero"
+           src="miro-canvas/Canvas-25-Stage.jpg"
+           alt="Canvas 25 Stage">
+      <a href="https://www.youtube.com/watch?v=vXatMsL7-Tk" target="_blank" style="display:block; position:relative; width:100%; border-radius:4px; overflow:hidden;">
+        <img src="miro-canvas/Canvas-25-NFL.jpg" style="width:100%; aspect-ratio:16/9; object-fit:cover; display:block;">
+        <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.3);">
+          <div style="width:56px; height:56px; background:#FF0000; border-radius:50%; display:flex; align-items:center; justify-content:center;">
+            <div style="width:0; height:0; border-top:10px solid transparent; border-bottom:10px solid transparent; border-left:18px solid white; margin-left:4px;"></div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="section-sep"></div>
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<!-- S5 — AEO/GEO & Review Signal Work                                      -->
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<section class="section section-content" id="s5">
+  <div class="left-col">
+    <h2 class="section-header">AEO/GEO &amp; Review Signal Work</h2>
+    <div class="ba-block">
+      <span class="ba-label before">BEFORE — YOUTUBE &amp; REDDIT</span>
+      <p class="ba-text before">Video repository with no distribution strategy. Reddit presence stagnant.</p>
+      <span class="ba-label after">AFTER</span>
+      <p class="ba-text after">Aligned channels to search and AI visibility growth. Scaled video production, AI avatar experimentation, active Reddit moderation and promotion. Google results influenced within hours of publishing.</p>
+    </div>
+    <div class="ba-block">
+      <span class="ba-label before">BEFORE — G2 REVIEWS</span>
+      <p class="ba-text before">Inherited stale program with static annual goals, no connection to product usage data or competitive positioning.</p>
+      <span class="ba-label after">AFTER</span>
+      <p class="ba-text after">Drilled into feature usage signals to identify high-value reviewers, increased review goals and specificity, targeted PM-relevant capabilities. Overtook competitors in priority categories.</p>
+    </div>
+    <div class="stats-row">
+      <div class="stat">
+        <span class="stat-num">+26%</span>
+        <span class="stat-label">organic YouTube views YoY</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">+52%</span>
+        <span class="stat-label">Reddit growth</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">12K+</span>
+        <span class="stat-label">G2 reviews · 143% volume increase</span>
+      </div>
+    </div>
+  </div>
+  <div class="right-col">
+    <div class="aeo-screenshots">
+      <div class="aeo-shot-label">YouTube</div>
+      <img class="screenshot"
+           src="AEO/Miro-YouTube-Playlists.png"
+           alt="YouTube">
+      <div class="aeo-shot-label">Reddit</div>
+      <img class="screenshot"
+           src="AEO/Reddit-Miro.png"
+           alt="Reddit">
+      <div class="aeo-shot-label">G2 Reviews</div>
+      <img class="screenshot"
+           src="AEO/G2-Miro.png"
+           alt="G2 Reviews">
+    </div>
+  </div>
+</section>
+
+<div class="section-sep"></div>
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<!-- S6 — Indeed Career Guide                                               -->
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<section class="section section-content" id="s6">
+  <div class="left-col">
+    <h2 class="section-header">Indeed Career Guide</h2>
+    <div class="ba-block">
+      <span class="ba-label before">BEFORE</span>
+      <p class="ba-text before">Organic growth plateauing — approaching the ceiling of job listing optimization. No content addressing career services keywords. Job seekers had unmet informational and emotional needs with no trusted resource.</p>
+      <span class="ba-label after">AFTER</span>
+      <p class="ba-text after">Conceived and named the product. Built platform and content strategy from scratch. Milestone-based growth from first article to 1M visits, 20M, then 150M. Made the business case for dedicated product investment. Became Indeed's number one source of new user acquisition globally.</p>
+    </div>
+    <div class="stats-row">
+      <div class="stat">
+        <span class="stat-num">150M</span>
+        <span class="stat-label">organic visits at scale</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">25%</span>
+        <span class="stat-label">of all global consumer acquisition</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">20+</span>
+        <span class="stat-label">markets and languages</span>
+      </div>
+    </div>
+  </div>
+  <div class="right-col">
+    <div class="screenshot-col">
+      <img class="screenshot"
+           src="indeed-career-guide/Indeed-Career-Guide-Homepage.png"
+           alt="Indeed Career Guide Homepage">
+    </div>
+  </div>
+</section>
+
+<!-- ── JavaScript ─────────────────────────────────────────────────────────── -->
+<script>
+(function () {
+  'use strict';
+
+  const sections   = Array.from(document.querySelectorAll('.section'));
+  const toggleBtn  = document.getElementById('toggle-btn');
+  const counter    = document.getElementById('frame-counter');
+  const frameNav   = document.getElementById('frame-nav');
+  const btnPrev    = document.getElementById('btn-prev');
+  const btnNext    = document.getElementById('btn-next');
+  const N          = sections.length;
+  let isFrames     = false;
+  let current      = 0;
+
+  /* ── Navigate to section idx ─────────────────────────────────────────── */
+  function goTo(idx) {
+    idx = Math.max(0, Math.min(idx, N - 1));
+    sections[current].classList.remove('frames-active');
+    current = idx;
+    const sec = sections[current];
+    sec.classList.add('frames-active');
+    // Reset any internal scroll
+    sec.scrollTop = 0;
+    const lc = sec.querySelector('.left-col');
+    if (lc) lc.scrollTop = 0;
+    // Update controls
+    counter.textContent = (current + 1) + ' / ' + N;
+    btnPrev.disabled = current === 0;
+    btnNext.disabled = current === N - 1;
+  }
+
+  /* ── Enter frames mode ───────────────────────────────────────────────── */
+  function enterFrames() {
+    isFrames = true;
+    document.body.classList.add('frames-mode');
+    counter.style.display = 'inline';
+    frameNav.style.display = 'flex';
+    toggleBtn.textContent = 'View as Page';
+    goTo(current);
+  }
+
+  /* ── Exit frames mode ────────────────────────────────────────────────── */
+  function exitFrames() {
+    const wasAt = sections[current];
+    isFrames = false;
+    sections.forEach(s => s.classList.remove('frames-active'));
+    document.body.classList.remove('frames-mode');
+    counter.style.display = 'none';
+    frameNav.style.display = 'none';
+    toggleBtn.textContent = 'View as Frames';
+    // Return to the section we were viewing
+    requestAnimationFrame(() => wasAt.scrollIntoView({ behavior: 'instant' }));
+  }
+
+  /* ── Event listeners ─────────────────────────────────────────────────── */
+  toggleBtn.addEventListener('click', () => isFrames ? exitFrames() : enterFrames());
+  btnPrev.addEventListener('click', () => goTo(current - 1));
+  btnNext.addEventListener('click', () => goTo(current + 1));
+
+  document.addEventListener('keydown', function (e) {
+    if (!isFrames) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault(); goTo(current + 1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault(); goTo(current - 1);
+    }
+  });
+
+  /* ── Track current section while scrolling (for frames re-entry) ─────── */
+  const io = new IntersectionObserver(function (entries) {
+    if (isFrames) return;
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.45) {
+        current = sections.indexOf(entry.target);
+      }
+    });
+  }, { threshold: 0.45 });
+  sections.forEach(s => io.observe(s));
+
+})();
+</script>
+
+</body>
+</html>

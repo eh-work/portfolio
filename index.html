@@ -674,6 +674,55 @@ body.frames-mode .title-inner {
     padding-top: 32px !important;
     padding-bottom: 32px !important;
   }
+
+  .right-col-scroll,
+  .advocacy-right,
+  .canvas-right,
+  .aeo-screenshots {
+    position: static !important;
+    inset: auto !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow-y: visible !important;
+    padding: 0 24px 40px 24px !important;
+  }
+
+  .right-col {
+    position: static !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  .section-content {
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  .left-col {
+    padding-bottom: 40px !important;
+  }
+
+  .section-sep {
+    margin: 24px 0 !important;
+  }
+
+  .right-col-scroll,
+  .advocacy-right,
+  .canvas-right,
+  .aeo-screenshots {
+    padding-bottom: 0 !important;
+  }
+
+  .img-grid-2,
+  .img-grid-3 {
+    gap: 24px !important;
+  }
+
+  .right-col-label {
+    margin-top: 24px !important;
+  }
 }
 
 </style>
@@ -926,21 +975,29 @@ body.frames-mode .title-inner {
       <div class="img-grid-3">
         <div class="img-grid-item">
           <div class="right-col-label">Berlin Meetup</div>
-          <img src="miro-ambassadors/Berlin-Meetup.webp" alt="Berlin Meetup" class="img-photo" style="height:160px; width:100%;">
+          <a class="lightbox-trigger" href="#">
+            <img src="miro-ambassadors/Berlin-Meetup.webp" alt="Berlin Meetup" class="img-photo" style="height:160px; width:100%;">
+          </a>
         </div>
         <div class="img-grid-item">
           <div class="right-col-label">Brooklyn Meetup</div>
-          <img src="miro-ambassadors/Brooklyn-Meetup.jpeg" alt="Brooklyn Meetup" class="img-photo" style="height:160px; width:100%;">
+          <a class="lightbox-trigger" href="#">
+            <img src="miro-ambassadors/Brooklyn-Meetup.jpeg" alt="Brooklyn Meetup" class="img-photo" style="height:160px; width:100%;">
+          </a>
         </div>
         <div class="img-grid-item">
           <div class="right-col-label">Miro x Lovable Event</div>
-          <img src="miro-ambassadors/Miro-Loveable-Event.jpg" alt="Miro x Lovable Event" class="img-photo" style="height:160px; width:100%;">
+          <a class="lightbox-trigger" href="#">
+            <img src="miro-ambassadors/Miro-Loveable-Event.jpg" alt="Miro x Lovable Event" class="img-photo" style="height:160px; width:100%;">
+          </a>
         </div>
       </div>
       <div class="img-grid-2" style="margin-top:12px;">
         <div class="img-grid-item">
           <div class="right-col-label">Miro x Eleven Labs Hackathon</div>
-          <img src="miro-ambassadors/Miro-Eleven-Labs-Hackathon.jpeg" alt="Eleven Labs Hackathon" class="img-photo" style="height:180px; width:100%;">
+          <a class="lightbox-trigger" href="#">
+            <img src="miro-ambassadors/Miro-Eleven-Labs-Hackathon.jpeg" alt="Eleven Labs Hackathon" class="img-photo" style="height:180px; width:100%;">
+          </a>
         </div>
         <div class="img-grid-item">
           <div class="right-col-label">Miro x Lovable Event Page</div>
